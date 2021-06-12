@@ -4,7 +4,7 @@ import { LandingPage } from "./components/LandingPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  // needs to return nav-bar, body then footer
+  // TODO: needs to return nav-bar, body then footer
   return (
     <>
       <NavBar />

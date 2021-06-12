@@ -1,20 +1,31 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import { Avatar, CardHeader } from "@material-ui/core";
-import { purple } from '@material-ui/core/colors';
-import ComputerIcon from '@material-ui/icons/Computer';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
+import {
+  createMuiTheme,
+  makeStyles,
+  ThemeProvider,
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  CardHeader,
+  CardActions,
+  Button,
+} from '@material-ui/core';
+import { blue, purple } from '@material-ui/core/colors';
 import { Radar } from 'react-chartjs-2';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
+import { fetchChartData } from "./api";
 
-function CourseCard() {
+function CourseCard({icon}) {
+
+  const [data, setData] = useState([0, 0, 0, 0, 0]);
+  useEffect(() => {
+    async function fetchData() {
+      return await fetchChartData();
+    }
+    fetchData().then((response) => setData(response));
+  }, []);
 
   const useStyles = makeStyles({
     root: {
@@ -28,14 +39,13 @@ function CourseCard() {
 
   const theme = createMuiTheme({
     overrides: {
-      // Style sheet name ⚛️
       MuiCardHeader: {
         root: {height: 100},
       }
     },
   });
 
-  const data = [4, 2, 5, 1, 8];
+  // const data = [4, 2, 5, 1, 8];
   const options = {
     legend: {
       position: "right",
@@ -55,60 +65,63 @@ function CourseCard() {
   };
 
   return (
-    <Card className={classes.root}>
-      {/*<CardActionArea>*/}
-        <ThemeProvider theme={theme}>
-          <CardHeader
-            avatar={
-              <Avatar style={{backgroundColor: purple[300], width: 75, height: 75}}>
-                <ComputerIcon style={{ fontSize: 40 }}/>
-              </Avatar>
-            }
-            title={
-              <Typography variant='h6'>CS 3350</Typography>
-            }
-            subheader={
-              <>
-                <Typography variant='subtitle1'>Computer Organization</Typography>
-                <Typography variant='subtitle2'>Prof. Alex Brandt</Typography>
-              </>
-            }
-          />
-        </ThemeProvider>
-        <Radar
-          data={{
-            labels: [
-              "enjoyment",
-              "relevance",
-              "workLoad",
-              "easiness",
-              "expectedGrade",
-            ],
-            datasets: [{
-              label: 'CS 3350',
-              data: data,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgb(255, 99, 132)',
-              pointBackgroundColor: 'rgb(255, 99, 132)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
-              pointHoverBorderColor: 'rgb(255, 99, 132)',
-            }],
-          }}
-          options={options}
-          height={300}
-          width={300}
-          style={{padding: 10}}
+    <Card className={classes.root} elevation={4}>
+      <ThemeProvider theme={theme}>
+        <CardHeader
+          avatar={
+            <Avatar style={{backgroundColor: purple[300], width: 75, height: 75}}>
+              {
+                React.cloneElement(icon,
+                  {style: {fontSize: 40}}
+                )
+              }
+            </Avatar>
+          }
+          title={
+            <Typography variant='h6'>CS 3350</Typography>
+          }
+          subheader={
+            <>
+              <Typography variant='subtitle1'>Computer Organization</Typography>
+              <Typography variant='subtitle2'>Prof. Alex Brandt</Typography>
+            </>
+          }
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Course Description:
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            The course is designed to give students an appreciation of hardware, its design, its implementation, and the impact of all of this on how software runs on the hardware. We will look at the general topics:
-          </Typography>
-        </CardContent>
-      {/*</CardActionArea>*/}
+      </ThemeProvider>
+      <Radar
+        data={{
+          labels: [
+            "enjoyment",
+            "relevance",
+            "workLoad",
+            "easiness",
+            "expectedGrade",
+          ],
+          datasets: [{
+            label: 'CS 3350',
+            data: data,
+            backgroundColor: fade(blue[800], 0.2),
+            borderColor: blue[800],
+            pointBackgroundColor: blue[800],
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: blue[800],
+          }],
+        }}
+        options={options}
+        height={300}
+        width={300}
+        style={{padding: 10}}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          Course Description:
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          The course is designed to give students an appreciation of hardware, its design, its implementation, and the
+          impact of all of this on how software runs on the hardware. We will look at the general topics:
+        </Typography>
+      </CardContent>
       <CardActions>
         <Button size="small" color="primary">
           Share
