@@ -14,8 +14,11 @@ import {
 import { blue, purple } from '@material-ui/core/colors';
 import { Radar } from 'react-chartjs-2';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { Link } from "react-router-dom";
 
 import { fetchChartData } from "./api";
+
+import { routePath } from "./constants";
 
 function CourseCard({icon}) {
 
@@ -126,9 +129,11 @@ function CourseCard({icon}) {
         <Button size="small" color="primary">
           Share
         </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
+        <Link to={`/${routePath.course}/:randomID`} style={{ textDecoration: 'none' }}>
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
