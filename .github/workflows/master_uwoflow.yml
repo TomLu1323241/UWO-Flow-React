@@ -36,7 +36,7 @@ jobs:
         app-name: 'uwoflow'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3d23091d4a47496c87e1e59114413da6 }}
-        package: .
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/build'
 
 #    - name: Upload artifact for deployment job
 #      uses: actions/upload-artifact@v2
