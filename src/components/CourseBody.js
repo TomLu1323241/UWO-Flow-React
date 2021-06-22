@@ -13,6 +13,7 @@ import { fetchCourseData } from "./api";
 import { CourseAccordion } from "./CourseAccordion";
 
 function CourseBody() {
+  console.log(useParams());
   let courseID = useParams()[routePathID.course].substr(1);
   const [data, setData] = useState('loading...');
   useEffect(() => {

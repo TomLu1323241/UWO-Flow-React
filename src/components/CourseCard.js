@@ -129,7 +129,7 @@ function CourseCard({icon}) {
         <Button size="small" color="primary">
           Share
         </Button>
-        <Link to={`/${routePath.course}/:randomID`} style={{ textDecoration: 'none' }}>
+        <Link to={`/${routePath.course}/randomID`} style={{ textDecoration: 'none' }}>
           <Button size="small" color="primary">
             Learn More
           </Button>
