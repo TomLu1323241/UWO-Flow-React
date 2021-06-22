@@ -11,4 +11,14 @@ async function fetchChartData() {
   return data;
 }
 
-export { fetchChartData }
+async function fetchCourseData(courseID) {
+  return {
+    courseTitle: 'CS 3350',
+    courseDescription: 'The course is designed to give students an appreciation of hardware, its design, its ' +
+      'implementation, and the impact of all of this on how software runs on the hardware. We will look at the general topics:',
+    courseID: courseID,
+    courseRatings: await fetchChartData(),
+  };
+}
+
+export { fetchChartData, fetchCourseData }
